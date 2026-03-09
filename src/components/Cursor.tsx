@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const Cursor = () => {
-    const cursorRef = useRef(null);
+    const cursorRef = useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -11,7 +11,7 @@ const Cursor = () => {
     const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
-        const moveCursor = (e) => {
+        const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX - 16);
             mouseY.set(e.clientY - 16);
         };

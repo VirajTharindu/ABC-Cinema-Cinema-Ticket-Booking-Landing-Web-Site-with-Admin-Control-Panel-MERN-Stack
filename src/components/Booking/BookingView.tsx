@@ -8,7 +8,7 @@ import CheckoutPortal from './CheckoutPortal';
 import SuccessView from './SuccessView';
 import { generateTicketPDF } from '../../services/PDFService';
 
-const BookingView = () => {
+const BookingView: React.FC = () => {
     const selectedMovie = useStore((state) => state.selectedMovie);
     const closeBooking = useStore((state) => state.closeBooking);
     const selectedSeats = useStore((state) => state.selectedSeats);

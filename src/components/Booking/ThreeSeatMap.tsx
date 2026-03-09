@@ -3,8 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import {
     OrbitControls,
     Text,
-    Float,
-    MeshDistortMaterial,
     ContactShadows,
     PerspectiveCamera,
     Environment
@@ -12,12 +10,17 @@ import {
 import * as THREE from 'three';
 import { useStore } from '../../store/useStore';
 
-const INTER_FONT_URL = "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf";
+interface SeatMeshProps {
+    position: [number, number, number];
+    id: string;
+    type: 'balcony' | 'standard';
+    isSelected: boolean;
+}
 
-const SeatMesh = ({ position, id, type, isSelected }) => {
+const SeatMesh: React.FC<SeatMeshProps> = ({ position, id, type, isSelected }) => {
     const toggleSeat = useStore((state) => state.toggleSeat);
     const [hovered, setHovered] = useState(false);
-    const meshRef = useRef();
+    const meshRef = useRef<THREE.Mesh>(null);
 
     // Cinematic color palette
     const baseColor = type === 'balcony' ? '#DC143C' : '#333333';
@@ -66,7 +69,9 @@ const SeatMesh = ({ position, id, type, isSelected }) => {
     );
 };
 
-const CinemaHall = () => {
+const INTER_FONT_URL = "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf";
+
+const CinemaHall: React.FC = () => {
     const selectedSeats = useStore((state) => state.selectedSeats);
 
     const rows = 6;
@@ -74,7 +79,7 @@ const CinemaHall = () => {
     const spacing = 1.5;
 
     const seats = useMemo(() => {
-        const items = [];
+        const items: { id: string; position: [number, number, number]; type: 'balcony' | 'standard'; isSelected: boolean }[] = [];
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const id = `${r}-${c}`;
@@ -123,7 +128,7 @@ const CinemaHall = () => {
                     intensity={5}
                     color="#FFD700"
                     position={[0, 0, 1]}
-                    rotation={[0, Math.PI, 0]}
+                    rotation={[0, Math.PI, 0] as any}
                 />
             </group>
 

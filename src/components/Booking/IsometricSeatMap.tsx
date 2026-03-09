@@ -2,15 +2,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../store/useStore';
 
-const SeatSVG = ({ id, x, y, type, isSelected, onClick }) => {
-    const [ripples, setRipples] = useState([]);
+interface Ripple {
+    id: number;
+    x: number;
+    y: number;
+}
 
-    const handleAction = (e) => {
+interface SeatSVGProps {
+    id: string;
+    x: number;
+    y: number;
+    type: 'balcony' | 'standard';
+    isSelected: boolean;
+    onClick: () => void;
+}
+
+const SeatSVG: React.FC<SeatSVGProps> = ({ x, y, type, isSelected, onClick }) => {
+    const [ripples, setRipples] = useState<Ripple[]>([]);
+
+    const handleAction = (e: React.MouseEvent<SVGGElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const rippleX = e.clientX - rect.left;
         const rippleY = e.clientY - rect.top;
 
-        const newRipple = { id: Date.now(), x: rippleX, y: rippleY };
+        const newRipple: Ripple = { id: Date.now(), x: rippleX, y: rippleY };
         setRipples(prev => [...prev, newRipple]);
         setTimeout(() => setRipples(prev => prev.filter(r => r.id !== newRipple.id)), 1000);
 
@@ -56,18 +71,18 @@ const SeatSVG = ({ id, x, y, type, isSelected, onClick }) => {
     );
 };
 
-const IsometricSeatMap = () => {
+const IsometricSeatMap: React.FC = () => {
     const toggleSeat = useStore((state) => state.toggleSeat);
     const selectedSeats = useStore((state) => state.selectedSeats);
-    const containerRef = useRef(null);
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [tilt, setTilt] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
     const rows = 6;
     const cols = 10;
     const spacing = 40;
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        const handleMouseMove = (e: MouseEvent) => {
             if (!containerRef.current) return;
             const { left, top, width, height } = containerRef.current.getBoundingClientRect();
             const x = (e.clientX - left) / width - 0.5;
@@ -75,7 +90,7 @@ const IsometricSeatMap = () => {
             setTilt({ x: x * 15, y: y * -15 }); // Increased sensitivity slightly
         };
 
-        const handleGyro = (e) => {
+        const handleGyro = (e: DeviceOrientationEvent) => {
             if (!e.beta || !e.gamma) return;
             // Beta: front-to-back tilt (-180 to 180), Gamma: left-to-right tilt (-90 to 90)
             const x = (e.gamma / 45); // Roughly -1 to 1 range

@@ -1,10 +1,10 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sparkles, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-const CinematicBackground = () => {
-    const groupRef = useRef();
+const CinematicBackground: React.FC = () => {
+    const groupRef = useRef<THREE.Group>(null);
 
     useFrame((state) => {
         if (groupRef.current) {

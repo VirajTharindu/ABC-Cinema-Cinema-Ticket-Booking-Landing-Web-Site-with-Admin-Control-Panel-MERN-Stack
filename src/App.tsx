@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Layout from './components/Layout'
 import Hero from './components/Hero'
 import ThreeMovieCarousel from './components/Three/ThreeMovieCarousel'
@@ -19,7 +19,7 @@ function App() {
 
     // Secret Admin Toggle: Alt + A
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.altKey && e.key.toLowerCase() === 'a') {
                 setView(view === 'admin' ? 'home' : 'admin');
             }

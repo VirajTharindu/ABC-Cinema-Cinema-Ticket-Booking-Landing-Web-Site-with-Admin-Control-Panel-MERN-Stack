@@ -1,14 +1,15 @@
 import { create } from 'zustand';
+import { StoreState, Ticket, Transaction } from '../domain/types';
 
-export const useStore = create((set) => ({
-    view: 'home', // 'home' | 'booking' | 'admin'
+export const useStore = create<StoreState>((set) => ({
+    view: 'home',
     selectedMovie: null,
     selectedSeats: [],
-    bookingStatus: 'idle', // 'idle' | 'paying' | 'success' | 'failed'
+    bookingStatus: 'idle',
     tickets: [],
     cancelledTickets: [],
     transactions: [],
-    activeComm: null, // { type: 'sms' | 'email', data: any }
+    activeComm: null,
     contactEmail: '',
     contactPhone: '',
     testimonials: [
@@ -54,7 +55,9 @@ export const useStore = create((set) => ({
     startPayment: () => set({ bookingStatus: 'paying' }),
     cancelPayment: () => set({ bookingStatus: 'idle' }),
     completePayment: (contactData) => set((state) => {
-        const newTicket = {
+        if (!state.selectedMovie) return state;
+
+        const newTicket: Ticket = {
             id: `TCK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
             movie: state.selectedMovie,
             seats: state.selectedSeats,
@@ -62,9 +65,9 @@ export const useStore = create((set) => ({
             time: "7:30 PM",
             hall: "Hall A • Premium Immersive",
             price: state.selectedMovie.price * state.selectedSeats.length,
-            customer: contactData // { email, phone }
+            customer: contactData
         };
-        const newTransaction = {
+        const newTransaction: Transaction = {
             id: `TRX-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
             ticketId: newTicket.id,
             type: 'booking',
@@ -85,7 +88,7 @@ export const useStore = create((set) => ({
         const ticketToCancel = state.tickets.find(t => t.id === ticketId);
         if (!ticketToCancel) return state;
 
-        const newTransaction = {
+        const newTransaction: Transaction = {
             id: `TRX-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
             ticketId: ticketId,
             type: 'cancellation',

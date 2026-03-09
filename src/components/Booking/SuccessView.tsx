@@ -4,7 +4,13 @@ import { useStore } from '../../store/useStore';
 import { CheckCircle, Download, Share2, Calendar, MapPin, Sparkles, Mail, MessageSquare } from 'lucide-react';
 import MagneticButton from '../MagneticButton';
 
-const SuccessView = ({ onDownload, onSendEmail, onSendSMS }) => {
+interface SuccessViewProps {
+    onDownload: () => void;
+    onSendEmail: () => void;
+    onSendSMS: () => void;
+}
+
+const SuccessView: React.FC<SuccessViewProps> = ({ onDownload, onSendEmail, onSendSMS }) => {
     const tickets = useStore((state) => state.tickets);
     const resetBooking = useStore((state) => state.resetBooking);
     const latestTicket = tickets[tickets.length - 1];
