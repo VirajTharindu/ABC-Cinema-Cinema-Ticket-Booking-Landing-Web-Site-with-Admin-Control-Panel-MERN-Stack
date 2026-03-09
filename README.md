@@ -76,11 +76,9 @@ The following resources demonstrate the system's behavior:
 ### 👤 User Profile
 ![User Profile](docs/screenshots/user_profile.png)
 
-### 🎟️ Booking Ticket
-![Booking Ticket](docs/screenshots/booking_ticket.png)
-
-### 🚫 Cancellation Pass
-![Cancellation Pass](docs/screenshots/booking_cancellation_ticket.png)
+| 🎟️ Booking Ticket | 🚫 Cancellation Pass |
+|:---:|:---:|
+| ![Booking Ticket](docs/screenshots/booking_ticket.png) | ![Cancellation Pass](docs/screenshots/booking_cancellation_ticket.png) |
 
 ### 💬 Confirmation
 ![Confirmation](docs/screenshots/confirmation_message.png)
