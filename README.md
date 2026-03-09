@@ -35,16 +35,16 @@ The system focuses on **visual excellence and intuitive user flow**, aiming to *
 
 The following resources demonstrate the system's behavior:
 
-- 📹 Product walkthrough video
-- 📸 Screenshots of key features
-- 📄 System architecture overview
-- 🧠 Engineering lessons
-- 🔧 Design decisions
-- 🗺️ Roadmap
-- 🚀 Future improvements
-- 📄 Documentation
-- 📝 License
-- 📩 Contact
+- [📹 Product walkthrough video](#-product-video)
+- [📸 Screenshots of key features](#-screenshots)
+- [📄 System architecture overview](#-architecture-overview)
+- [🧠 Engineering lessons](#-engineering-lessons)
+- [🔧 Design decisions](#-key-design-decisions)
+- [🗺️ Roadmap](#-roadmap)
+- [🚀 Future improvements](#-future-improvements)
+- [📄 Documentation](#-documentations)
+- [📝 License](#-license)
+- [📩 Contact](#-contact)
 
 ---
 
@@ -58,23 +58,41 @@ The following resources demonstrate the system's behavior:
 
 # 📸 Screenshots
 
-| 🏠 Landing Page | 🧊 3D Seat Map | 💳 Secure Checkout |
-|---------------|---------------|---------------|
-| ![](docs/screenshots/landing_page.png) | ![](docs/screenshots/3d_seat_map.png) | ![](docs/screenshots/checkout.png) |
+### 🏠 Landing Page
+![Landing Page](docs/screenshots/landing_page.png)
 
-| 📊 Admin Dashboard | 📄 PDF Ticket View | 👤 User Profile |
-|---------------|---------------|---------------|
-| ![](docs/screenshots/admin_dashboard.png) | ![](docs/screenshots/pdf_ticket_view.png) | ![](docs/screenshots/user_profile.png) |
+### 🧊 3D Seat Map
+![3D Seat Map](docs/screenshots/3d_seat_map.png)
 
-| 🎟️ Booking Ticket | 🚫 Cancellation Pass | 💬 Confirmation |
-|---------------|---------------|---------------|
-| ![](docs/screenshots/booking_ticket.png) | ![](docs/screenshots/booking_cancellation_ticket.png) | ![](docs/screenshots/confirmation_message.png) |
+### 💳 Secure Checkout
+![Secure Checkout](docs/screenshots/checkout.png)
+
+### 📊 Admin Dashboard
+![Admin Dashboard](docs/screenshots/admin_dashboard.png)
+
+### 📄 PDF Ticket View
+![PDF Ticket View](docs/screenshots/pdf_ticket_view.png)
+
+### 👤 User Profile
+![User Profile](docs/screenshots/user_profile.png)
+
+### 🎟️ Booking Ticket
+![Booking Ticket](docs/screenshots/booking_ticket.png)
+
+### 🚫 Cancellation Pass
+![Cancellation Pass](docs/screenshots/booking_cancellation_ticket.png)
+
+### 💬 Confirmation
+![Confirmation](docs/screenshots/confirmation_message.png)
 
 ---
 
 # ⚙️ Architecture Overview
 
-CineMaya is implemented using a **Moduralized MERN Stack Architecture**.
+ABC Cinema follows a **Clean-Aligned Modular Architecture**. While the current structure is organized into feature-based modules and centralized services, we are on a path towards a strict **Clean Architecture & DDD** implementation.
+
+### Current State:
+- **Modular Presentation:** React components are grouped by functional areas (Admin, Booking, Three).
 
 ### Frontend
 - **React 19** (Concurrent Rendering)
@@ -98,15 +116,6 @@ CineMaya is implemented using a **Moduralized MERN Stack Architecture**.
 
 ---
 
-# 🏗️ Architectural Evolution
-
-ABC Cinema follows a **Clean-Aligned Modular Architecture**. While the current structure is organized into feature-based modules and centralized services, we are on a path towards a strict **Clean Architecture & DDD** implementation.
-
-### Current State:
-- **Modular Presentation:** React components are grouped by functional areas (Admin, Booking, Three).
-- **Centralized Application State:** Zustand stores manage complex business transitions and UI states.
-- **Infrastructure Services:** Cross-cutting concerns like PDF generation are encapsulated in dedicated service modules.
-
 ### Future Roadmap:
 - [ ] **Physical Layer Separation:** Explicit refactoring into `domain`, `application`, `infrastructure`, and `presentation` directories.
 - [ ] **Domain Entity Modeling:** Transitioning from static data to rich domain entities with business logic.
@@ -116,7 +125,7 @@ ABC Cinema follows a **Clean-Aligned Modular Architecture**. While the current s
 
 # 🧠 Engineering Lessons
 
-During development of CineMaya, the focus areas included:
+During development of ABC Cinema, the focus areas included:
 
 - **3D Render Optimization:** Managing canvas performance in React for high-frame-rate interaction.
 - **Transactional Integrity:** Ensuring Stripe payment webhooks (simulated) correctly sync with the local state.
@@ -194,7 +203,7 @@ I would be happy to discuss the architecture, design decisions, or provide a pri
 **Opportunities for collaboration or professional roles are always welcome.**
 
 📧 Email: [virajtharindu1997@gmail.com](mailto:virajtharindu1997@gmail.com)  
-💼 LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/viraj-tharindu/)  
+💼 LinkedIn: [viraj-tharindu](https://www.linkedin.com/in/viraj-tharindu/)  
 🌐 Portfolio: [Visit my portfolio](https://your-portfolio-link.com)  
 🐙 GitHub: [VirajTharindu](https://github.com/VirajTharindu)  
 
