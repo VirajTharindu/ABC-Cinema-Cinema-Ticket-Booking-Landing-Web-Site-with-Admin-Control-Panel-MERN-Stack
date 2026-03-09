@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ThreeBackground from './ThreeBackground';
@@ -7,10 +7,10 @@ import { motion } from 'framer-motion';
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-    const heroRef = useRef(null);
-    const videoTextRef = useRef(null);
-    const textRevealRef = useRef(null);
-    const cinematicVideoRef = useRef(null);
+    const heroRef = useRef<HTMLElement>(null);
+    const videoTextRef = useRef<HTMLDivElement>(null);
+    const textRevealRef = useRef<HTMLDivElement>(null);
+    const cinematicVideoRef = useRef<HTMLVideoElement>(null);
 
     // Cinematic Video Source (High-quality abstract/theatrical)
     const videoSrc = "https://assets.mixkit.co/videos/preview/mixkit-slow-motion-of-a-theatre-curtain-opening-42403-large.mp4";
@@ -68,7 +68,7 @@ const Hero = () => {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] as any }
         }
     };
 

@@ -1,11 +1,18 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as d3 from 'd3';
 import { useStore } from '../../store/useStore';
 import { Bell, Activity, Users, DollarSign, X } from 'lucide-react';
 import MagneticButton from '../MagneticButton';
+import { movies } from '../../data/movieCatalog';
 
-const BentoCard = ({ children, className = "", delay = 0 }) => (
+interface BentoCardProps {
+    children: React.ReactNode;
+    className?: string;
+    delay?: number;
+}
+
+const BentoCard: React.FC<BentoCardProps> = ({ children, className = "", delay = 0 }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -17,8 +24,8 @@ const BentoCard = ({ children, className = "", delay = 0 }) => (
     </motion.div>
 );
 
-const LiveChart = () => {
-    const [data, setData] = React.useState(() => Array.from({ length: 20 }, () => Math.random() * 50 + 20));
+const LiveChart: React.FC = () => {
+    const [data, setData] = React.useState<number[]>(() => Array.from({ length: 20 }, () => Math.random() * 50 + 20));
 
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -31,12 +38,12 @@ const LiveChart = () => {
         const xScale = d3.scaleLinear().domain([0, 19]).range([0, 300]);
         const yScale = d3.scaleLinear().domain([0, 100]).range([100, 0]);
 
-        const lineGenerator = d3.line()
-            .x((d, i) => xScale(i))
+        const lineGenerator = d3.line<number>()
+            .x((_, i) => xScale(i))
             .y(d => yScale(d))
             .curve(d3.curveMonotoneX);
 
-        return lineGenerator(data);
+        return lineGenerator(data) || "";
     }, [data]);
 
     return (
@@ -82,7 +89,7 @@ const LiveChart = () => {
     );
 };
 
-const NotificationStream = () => {
+const NotificationStream: React.FC = () => {
     const transactions = useStore((state) => state.transactions);
 
     // Mix actual transactions with a few system status items
@@ -134,12 +141,14 @@ const NotificationStream = () => {
     );
 };
 
-const AdminDashboard = () => {
+const AdminDashboard: React.FC = () => {
     const setView = useStore((state) => state.setView);
     const tickets = useStore((state) => state.tickets);
     const cancelledTickets = useStore((state) => state.cancelledTickets);
     const transactions = useStore((state) => state.transactions);
     const cancelTicket = useStore((state) => state.cancelTicket);
+
+    const [activeTab, setActiveTab] = React.useState<'bookings' | 'movies'>('bookings');
 
     const liveRevenue = useMemo(() => {
         return transactions.reduce((acc, trx) => {
@@ -208,70 +217,117 @@ const AdminDashboard = () => {
                         <NotificationStream />
                     </BentoCard>
 
-                    {/* Booking Management Table - Large Spanning Card */}
+                    {/* Booking / Movie Management Table - Large Spanning Card */}
                     <BentoCard className="md:col-span-3 md:row-span-2 p-0" delay={0.4}>
-                        <div className="p-8 border-b border-white/5 flex justify-between items-center">
-                            <h3 className="text-white font-bold uppercase tracking-widest">Booking Management</h3>
+                        <div className="p-8 border-b border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => setActiveTab('bookings')}
+                                    className={`text-sm font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${activeTab === 'bookings' ? 'text-white border-gold' : 'text-white/40 border-transparent hover:text-white/70'}`}
+                                >
+                                    Booking Management
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('movies')}
+                                    className={`text-sm font-bold uppercase tracking-widest pb-1 border-b-2 transition-all ${activeTab === 'movies' ? 'text-white border-gold' : 'text-white/40 border-transparent hover:text-white/70'}`}
+                                >
+                                    Movie Catalog
+                                </button>
+                            </div>
                             <span className="text-[10px] bg-gold/20 text-gold px-3 py-1 rounded-full uppercase font-bold tracking-tighter">Managerial Control Active</span>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left">
-                                <thead className="text-[10px] text-white/40 uppercase tracking-widest border-b border-white/5">
-                                    <tr>
-                                        <th className="px-8 py-4">ID</th>
-                                        <th className="px-8 py-4">Customer</th>
-                                        <th className="px-8 py-4">Movie</th>
-                                        <th className="px-8 py-4">Amount</th>
-                                        <th className="px-8 py-4">Status</th>
-                                        <th className="px-8 py-4 text-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm">
-                                    {/* Active Tickets */}
-                                    {tickets.map(ticket => (
-                                        <tr key={ticket.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                                            <td className="px-8 py-4 font-mono text-xs text-white/60">{ticket.id.slice(-6)}</td>
-                                            <td className="px-8 py-4">
-                                                <p className="text-white font-bold leading-none">{ticket.customer?.email || 'Guest User'}</p>
-                                                <p className="text-[10px] text-white/20 mt-1">{ticket.customer?.phone || '+94 00 000 0000'}</p>
-                                            </td>
-                                            <td className="px-8 py-4 text-white/80">{ticket.movie.title}</td>
-                                            <td className="px-8 py-4 font-bold text-gold">${ticket.price.toFixed(2)}</td>
-                                            <td className="px-8 py-4">
-                                                <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-[9px] uppercase font-bold">Confirmed</span>
-                                            </td>
-                                            <td className="px-8 py-4 text-right">
-                                                <button
-                                                    onClick={() => cancelTicket(ticket.id)}
-                                                    className="p-2 bg-crimson/10 text-crimson rounded-lg hover:bg-crimson hover:text-white transition-all group"
-                                                >
-                                                    <span className="text-[10px] font-bold uppercase">Cancel Ticket</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {/* Cancelled Tickets */}
-                                    {cancelledTickets.map(ticket => (
-                                        <tr key={ticket.id} className="border-b border-white/5 opacity-40 grayscale group hover:grayscale-0 hover:bg-white/5 transition-all">
-                                            <td className="px-8 py-4 font-mono text-xs">{ticket.id.slice(-6)}</td>
-                                            <td className="px-8 py-4">
-                                                <p className="font-bold leading-none">{ticket.customer?.email || 'Guest'}</p>
-                                            </td>
-                                            <td className="px-8 py-4">{ticket.movie.title}</td>
-                                            <td className="px-8 py-4">${ticket.price.toFixed(2)}</td>
-                                            <td className="px-8 py-4">
-                                                <span className="px-2 py-0.5 bg-white/10 text-white/40 rounded text-[9px] uppercase font-bold">Refunded</span>
-                                            </td>
-                                            <td className="px-8 py-4 text-right text-xs text-white/20 uppercase font-black">Archive</td>
-                                        </tr>
-                                    ))}
-                                    {tickets.length === 0 && cancelledTickets.length === 0 && (
+                            {activeTab === 'bookings' ? (
+                                <table className="w-full text-left">
+                                    <thead className="text-[10px] text-white/40 uppercase tracking-widest border-b border-white/5">
                                         <tr>
-                                            <td colSpan="6" className="px-8 py-20 text-center text-white/20 uppercase tracking-[0.3em] text-xs">No activity yet</td>
+                                            <th className="px-8 py-4">ID</th>
+                                            <th className="px-8 py-4">Customer</th>
+                                            <th className="px-8 py-4">Movie</th>
+                                            <th className="px-8 py-4">Amount</th>
+                                            <th className="px-8 py-4">Status</th>
+                                            <th className="px-8 py-4 text-right">Action</th>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="text-sm">
+                                        {/* Active Tickets */}
+                                        {tickets.map(ticket => (
+                                            <tr key={ticket.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                <td className="px-8 py-4 font-mono text-xs text-white/60">{ticket.id.slice(-6)}</td>
+                                                <td className="px-8 py-4">
+                                                    <p className="text-white font-bold leading-none">{ticket.customer?.email || 'Guest User'}</p>
+                                                    <p className="text-[10px] text-white/20 mt-1">{ticket.customer?.phone || '+94 00 000 0000'}</p>
+                                                </td>
+                                                <td className="px-8 py-4 text-white/80">{ticket.movie.title}</td>
+                                                <td className="px-8 py-4 font-bold text-gold">${ticket.price.toFixed(2)}</td>
+                                                <td className="px-8 py-4">
+                                                    <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-[9px] uppercase font-bold">Confirmed</span>
+                                                </td>
+                                                <td className="px-8 py-4 text-right">
+                                                    <button
+                                                        onClick={() => cancelTicket(ticket.id)}
+                                                        className="p-2 bg-crimson/10 text-crimson rounded-lg hover:bg-crimson hover:text-white transition-all group"
+                                                    >
+                                                        <span className="text-[10px] font-bold uppercase">Cancel Ticket</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        {/* Cancelled Tickets */}
+                                        {cancelledTickets.map(ticket => (
+                                            <tr key={ticket.id} className="border-b border-white/5 opacity-40 grayscale group hover:grayscale-0 hover:bg-white/5 transition-all">
+                                                <td className="px-8 py-4 font-mono text-xs">{ticket.id.slice(-6)}</td>
+                                                <td className="px-8 py-4">
+                                                    <p className="font-bold leading-none">{ticket.customer?.email || 'Guest'}</p>
+                                                </td>
+                                                <td className="px-8 py-4">{ticket.movie.title}</td>
+                                                <td className="px-8 py-4">${ticket.price.toFixed(2)}</td>
+                                                <td className="px-8 py-4">
+                                                    <span className="px-2 py-0.5 bg-white/10 text-white/40 rounded text-[9px] uppercase font-bold">Refunded</span>
+                                                </td>
+                                                <td className="px-8 py-4 text-right text-xs text-white/20 uppercase font-black">Archive</td>
+                                            </tr>
+                                        ))}
+                                        {tickets.length === 0 && cancelledTickets.length === 0 && (
+                                            <tr>
+                                                <td colSpan={6} className="px-8 py-20 text-center text-white/20 uppercase tracking-[0.3em] text-xs">No activity yet</td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <table className="w-full text-left">
+                                    <thead className="text-[10px] text-white/40 uppercase tracking-widest border-b border-white/5">
+                                        <tr>
+                                            <th className="px-8 py-4">Title</th>
+                                            <th className="px-8 py-4">Genre</th>
+                                            <th className="px-8 py-4">Duration</th>
+                                            <th className="px-8 py-4">Base Price</th>
+                                            <th className="px-8 py-4">Rating</th>
+                                            <th className="px-8 py-4 text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm">
+                                        {movies.map(movie => (
+                                            <tr key={movie.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                <td className="px-8 py-4 font-bold text-white flex items-center gap-3">
+                                                    <img src={movie.image} alt={movie.title} className="w-8 h-10 object-cover rounded opacity-80" />
+                                                    {movie.title}
+                                                </td>
+                                                <td className="px-8 py-4 text-white/60 text-xs">Sci-Fi / Action</td>
+                                                <td className="px-8 py-4 text-white/60 text-xs text-mono">140m</td>
+                                                <td className="px-8 py-4 font-bold text-white">${movie.price.toFixed(2)}</td>
+                                                <td className="px-8 py-4 text-gold text-xs">★★★★☆</td>
+                                                <td className="px-8 py-4 text-right">
+                                                    <button className="p-2 border border-white/10 text-white/60 rounded-lg hover:bg-white hover:text-obsidian transition-all">
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest">Edit Movie</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
                         </div>
                     </BentoCard>
                 </div>

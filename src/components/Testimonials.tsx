@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, Quote, Plus } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
-const StarRating = ({ rating }) => {
+const StarRating = ({ rating }: { rating: number }) => {
     return (
         <div className="flex gap-1">
             {[...Array(5)].map((_, i) => (
@@ -24,8 +24,8 @@ const StarRating = ({ rating }) => {
 
 const Testimonials = () => {
     const testimonials = useStore((state) => state.testimonials);
-    const sectionRef = useRef(null);
-    const cardsRef = useRef([]);
+    const sectionRef = useRef<HTMLElement>(null);
+    const cardsRef = useRef<HTMLDivElement[]>([]);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -73,7 +73,7 @@ const Testimonials = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((review, index) => (
+                    {testimonials.map((review) => (
                         <motion.div
                             key={review.id}
                             initial={{ opacity: 0, scale: 0.9 }}

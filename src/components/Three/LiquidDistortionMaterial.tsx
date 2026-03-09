@@ -49,6 +49,14 @@ const LiquidDistortionMaterial = shaderMaterial(
   `
 );
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      liquidDistortionMaterial: any;
+    }
+  }
+}
+
 extend({ LiquidDistortionMaterial });
 
 export default LiquidDistortionMaterial;

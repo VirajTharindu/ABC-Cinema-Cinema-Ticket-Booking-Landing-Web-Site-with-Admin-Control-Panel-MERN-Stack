@@ -12,7 +12,7 @@ const FeedbackForm = () => {
     const [hover, setHover] = useState(0);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !content || rating === 0) return;
 

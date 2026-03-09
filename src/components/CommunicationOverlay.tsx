@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Mail, Smartphone, X, CheckCircle, Download, Send } from 'lucide-react';
 
-const CommunicationOverlay = ({ type, data, onClose }) => {
+interface CommunicationOverlayProps {
+    type: 'email' | 'sms' | null;
+    data: any; // Context-dependent data, can be refined later if needed
+    onClose: () => void;
+}
+
+const CommunicationOverlay: React.FC<CommunicationOverlayProps> = ({ type, data, onClose }) => {
     if (!type) return null;
 
     const isEmail = type === 'email';

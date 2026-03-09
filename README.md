@@ -1,5 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Three.js-Black?style=for-the-badge&logo=three.js&logoColor=white" alt="Three.js" />
   <img src="https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white" alt="GSAP" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
@@ -93,7 +94,7 @@ ABC Cinema follows a **Clean-Aligned Modular Architecture**. While the current s
 - **Modular Presentation:** React components are grouped by functional areas (Admin, Booking, Three).
 
 ### Frontend
-- **React 19** (Concurrent Rendering)
+- **React 19 + TypeScript** (Type-safe UI Logic)
 - **Three.js / React Three Fiber** (3D Visuals)
 - **GSAP & Framer Motion** (Premium Animations)
 - **Tailwind CSS v4** (Next-gen Styling)
@@ -114,12 +115,6 @@ ABC Cinema follows a **Clean-Aligned Modular Architecture**. While the current s
 
 ---
 
-### Future Roadmap:
-- [ ] **Physical Layer Separation:** Explicit refactoring into `domain`, `application`, `infrastructure`, and `presentation` directories.
-- [ ] **Domain Entity Modeling:** Transitioning from static data to rich domain entities with business logic.
-- [ ] **Dependency Rule Enforcement:** Ensuring outer layers (UI/Services) only depend on inner layers (Business Logic).
-
----
 
 # 🧠 Engineering Lessons
 

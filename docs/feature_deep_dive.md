@@ -11,9 +11,9 @@ The seat map is not just a 2D grid; it's a dynamic 3D environment rendered using
 - **Raycasting:** Uses Three.js raycasting to detect seat clicks. When a user clicks a seat, the UUID is passed to the **Zustand store** to toggle selection.
 - **Dynamic Lighting:** Points lights and ambient occlusion are used to give the "Premium Immersive" hall feel.
 
-```javascript
-// Simplified logic for seat interaction
-const toggleSeat = (id) => {
+```typescript
+// Typed logic for seat interaction
+const toggleSeat = (id: string): void => {
   if (selectedSeats.includes(id)) {
     removeSeat(id);
   } else {

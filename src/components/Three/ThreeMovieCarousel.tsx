@@ -9,8 +9,8 @@ import { useEffect } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Scene = () => {
-    const groupRef = useRef();
+const Scene: React.FC = () => {
+    const groupRef = useRef<THREE.Group>(null);
 
     useEffect(() => {
         if (!groupRef.current) return;
@@ -23,7 +23,7 @@ const Scene = () => {
             const trigger = document.getElementById("three-carousel-trigger");
             if (!trigger) return;
 
-            gsap.to(groupRef.current.position, {
+            gsap.to((groupRef.current as THREE.Group).position, {
                 x: -totalWidth,
                 ease: "none",
                 scrollTrigger: {

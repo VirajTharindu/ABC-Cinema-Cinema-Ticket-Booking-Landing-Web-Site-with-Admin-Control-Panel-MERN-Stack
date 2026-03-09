@@ -35,7 +35,7 @@ graph TD
 ## 💻 Frontend Stack
 
 ### **1. Rendering & 3D Optics**
-- **React 19:** Utilizing concurrent rendering for a highly responsive UI.
+- **React 19 + TypeScript:** Utilizing concurrent rendering and strong typing for a highly responsive and reliable UI.
 - **React Three Fiber (R3F):** A React bridge for Three.js, used to create the isometric seat selection map.
 - **Drei:** A helper library for R3F that provides pre-built components like `PerspectiveCamera` and `Html` overlays.
 

@@ -3,13 +3,20 @@ import { useFrame } from '@react-three/fiber';
 import { useTexture, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import LiquidDistortionMaterial from './LiquidDistortionMaterial';
+import './LiquidDistortionMaterial'; // Import for side effects (R3F extend)
 import MagneticButton from '../MagneticButton';
 import { useStore } from '../../store/useStore';
 
-const ThreeMovieCard = ({ movie, position }) => {
-    const meshRef = React.useRef();
-    const materialRef = React.useRef();
+import { Movie } from '../../domain/types';
+
+interface ThreeMovieCardProps {
+    movie: Movie;
+    position: [number, number, number];
+}
+
+const ThreeMovieCard: React.FC<ThreeMovieCardProps> = ({ movie, position }) => {
+    const meshRef = React.useRef<THREE.Mesh>(null);
+    const materialRef = React.useRef<any>(null);
     const texture = useTexture(movie.image);
     const setSelectedMovie = useStore((state) => state.setSelectedMovie);
 
@@ -45,12 +52,15 @@ const ThreeMovieCard = ({ movie, position }) => {
         }
     });
 
-    const handlePointerMove = (e) => {
+    const handlePointerMove = (e: any) => {
         // Normalize mouse position relative to the card (-0.5 to 0.5)
+        if (!e.uv) return;
         const x = e.uv.x - 0.5;
         const y = e.uv.y - 0.5;
         setMousePos(new THREE.Vector2(x, y));
-        materialRef.current.uMouse = new THREE.Vector2(e.uv.x, e.uv.y);
+        if (materialRef.current) {
+            materialRef.current.uMouse = new THREE.Vector2(e.uv.x, e.uv.y);
+        }
     };
 
     return (
@@ -105,7 +115,7 @@ const ThreeMovieCard = ({ movie, position }) => {
                         </h3>
                         <MagneticButton
                             className="w-full text-xs py-1"
-                            onClick={(e) => {
+                            onClick={(e: React.MouseEvent) => {
                                 e.stopPropagation();
                                 setSelectedMovie(movie);
                             }}

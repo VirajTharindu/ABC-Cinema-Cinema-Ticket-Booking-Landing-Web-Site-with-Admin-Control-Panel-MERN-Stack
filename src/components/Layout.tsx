@@ -6,25 +6,25 @@ import FilmReelLoader from './FilmReelLoader';
 import { motion, AnimatePresence } from 'framer-motion';
 import Cursor from './Cursor';
 
-const Layout = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isLoading, setIsLoading] = React.useState(true);
 
     // Integrated Lenis Hook Logic
     React.useEffect(() => {
         const lenis = new Lenis({
             duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             direction: 'vertical',
             gestureDirection: 'vertical',
             smooth: true,
             mouseMultiplier: 1,
             smoothTouch: false,
             touchMultiplier: 2,
-        });
+        } as any);
 
         lenis.on('scroll', ScrollTrigger.update);
 
-        const update = (time) => {
+        const update = (time: number) => {
             lenis.raf(time * 1000);
         };
 

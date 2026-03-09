@@ -6,7 +6,9 @@ import MagneticButton from './MagneticButton';
 import { generateTicketPDF } from '../services/PDFService';
 import CommunicationOverlay from './CommunicationOverlay';
 
-const UserProfile = () => {
+import { Ticket as TicketType } from '../domain/types';
+
+const UserProfile: React.FC = () => {
     const setView = useStore((state) => state.setView);
     const tickets = useStore((state) => state.tickets);
     const cancelledTickets = useStore((state) => state.cancelledTickets);
@@ -15,7 +17,7 @@ const UserProfile = () => {
     const setComm = useStore((state) => state.setComm);
     const activeComm = useStore((state) => state.activeComm);
 
-    const handleCancelAction = (ticket) => {
+    const handleCancelAction = (ticket: TicketType) => {
         // 1. Process Ledger/Store update
         cancelTicket(ticket.id);
 
@@ -59,7 +61,7 @@ const UserProfile = () => {
         visible: {
             opacity: 1,
             x: 0,
-            transition: { type: "spring", stiffness: 100, damping: 20 }
+            transition: { type: "spring" as const, stiffness: 100, damping: 20 }
         },
         exit: { opacity: 0, x: 100 }
     };

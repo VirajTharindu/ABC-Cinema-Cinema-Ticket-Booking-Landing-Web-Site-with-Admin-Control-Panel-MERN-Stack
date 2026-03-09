@@ -1,9 +1,10 @@
 import { jsPDF } from 'jspdf';
+import { Ticket } from '../domain/types';
 
-const BRAND_COLOR = [255, 215, 0]; // Gold
-const BG_COLOR = [5, 5, 5]; // Obsidian
+const BRAND_COLOR: [number, number, number] = [255, 215, 0]; // Gold
+const BG_COLOR: [number, number, number] = [5, 5, 5]; // Obsidian
 
-export const generateTicketPDF = (ticket, isCancellation = false) => {
+export const generateTicketPDF = (ticket: Ticket, isCancellation = false) => {
     const doc = new jsPDF();
     const { id, movie, seats, date, time, hall, price } = ticket;
 
@@ -34,7 +35,7 @@ export const generateTicketPDF = (ticket, isCancellation = false) => {
     doc.setFontSize(12);
 
     let y = 70;
-    const addLine = (label, value) => {
+    const addLine = (label: string, value: string | number) => {
         doc.setFont("helvetica", "bold");
         doc.text(`${label}:`, 25, y);
         doc.setFont("helvetica", "normal");
