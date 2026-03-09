@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
   <img src="https://img.shields.io/badge/Platform-Web-004D40?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Platform" />
-  <img src="https://img.shields.io/badge/License-MIT-E11D48?style=for-the-badge&logo=security&logoColor=white" alt="License" />
+  <img src="https://img.shields.io/badge/License-Portfolio%20Only-8B0000?style=for-the-badge&logo=security&logoColor=white" alt="License" />
 </p>
 
 # 🎬 ABC Cinema
@@ -181,7 +181,7 @@ Additional documentation is available in the `docs/` folder:
 
 This repository is published for **portfolio and educational review purposes**.
 
-The source code may not be accessed, copied, modified, distributed, or used without explicit permission from the author. However, the project structure is shared under the **MIT License** for community learning.
+The source code may not be accessed, copied, modified, distributed, or used without explicit permission from the author.
 
 © 2026 Viraj Tharindu — All Rights Reserved.
 
