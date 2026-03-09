@@ -5,7 +5,7 @@ import ThreeMovieCarousel from './components/Three/ThreeMovieCarousel'
 import BookingView from './components/Booking/BookingView'
 import AdminDashboard from './components/Admin/AdminDashboard'
 import { useStore } from './store/useStore'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Lock, User } from 'lucide-react'
 import UserProfile from './components/UserProfile'
 
